@@ -14,6 +14,11 @@ export const ContactsSchema = new SimpleSchema({
     type: String,
     optional: false,
     max: 200,
+    custom: function () {
+      if (this.value === this.field('last').value) {
+        return "Not a unique "
+      }
+    },
   },
   last: {
     label: 'last',
@@ -41,6 +46,8 @@ export const ContactsSchema = new SimpleSchema({
     max: 200,
   },
 });
+
+
 
 Contacts.attachSchema(ContactsSchema);
 

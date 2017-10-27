@@ -43,6 +43,14 @@ Template.Add_Contact_Page.events({
     ContactsSchema.clean(newContactData);
     // Determine validity.
     instance.context.validate(newContactData);
+    if (Contacts.findOne({
+          $and: [
+            {first: this.first},
+            {last: this.last}
+          ]
+        })) {
+      instance.messageFlags.set(displayErrorMessages, true);
+    }
     if (instance.context.isValid()) {
       Contacts.insert(newContactData);
       instance.messageFlags.set(displayErrorMessages, false);
